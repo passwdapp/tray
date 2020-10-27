@@ -1,6 +1,7 @@
-import 'dart:io';
+import 'dart:io' hide HttpRequest;
 
 import '../utils/logger.dart';
+import 'ws_handler.dart';
 
 class ServiceHttpServer {
   final int port;
@@ -20,19 +21,16 @@ class ServiceHttpServer {
 
         case '/ws':
           final publicKey = req.uri.queryParameters['key'];
+          final pinHash = req.uri.queryParameters['hash'];
           // TODO: implement authorization logic here
 
-          if (publicKey == null) {
+          if (publicKey == null || pinHash == null) {
             break;
           }
 
           try {
             final socket = await WebSocketTransformer.upgrade(req);
-
-            socket.listen((event) {
-              socket.add(event);
-              print(event);
-            });
+            handleWS(socket);
           } catch (e) {
             Loggers.HttpLogger.severe(e);
           }
