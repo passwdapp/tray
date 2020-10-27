@@ -1,4 +1,3 @@
-A simple command-line application.
+# Tray Service
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+The core of the tray service, exposes an HTTP and websocket based API for the browser extension to consume
