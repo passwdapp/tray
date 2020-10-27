@@ -6,18 +6,22 @@ import '../utils/logger.dart';
 
 void handleWS(WebSocket socket) {
   socket.listen((event) {
-    final data = json.decode(event.toString());
-    final request = RPCRequest.fromJson(data);
+    try {
+      final data = json.decode(event.toString());
+      final request = RPCRequest.fromJson(data);
 
-    switch (request.type) {
-      case 'search':
-        final params = SearchRequestParams.fromJson(request.params);
-        Loggers.HttpLogger.info('Got search query ${params.query}');
+      switch (request.type) {
+        case 'search':
+          final params = SearchRequestParams.fromJson(request.params);
+          Loggers.HttpLogger.info('Got search query ${params.query}');
 
-        break;
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+    } catch (e) {
+      return;
     }
   });
 }

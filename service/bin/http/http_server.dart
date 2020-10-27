@@ -6,8 +6,9 @@ import 'ws_handler.dart';
 class ServiceHttpServer {
   final int port;
   final InternetAddress address;
+  final String dbLocation;
 
-  ServiceHttpServer(this.address, this.port);
+  ServiceHttpServer(this.address, this.port, this.dbLocation);
 
   void listen() async {
     final server = await HttpServer.bind(address, port);
